@@ -1,8 +1,8 @@
-# Hot Dang Site Handoff: Next Phase Is Projects
+# Hot Dang Site Handoff: Next Phase Is About
 
 ## Current State
 
-This project is a deploy-ready Next.js recreation of the Amber Framer template homepage, renamed and adapted for Hot Dang.
+This project is a deploy-ready Next.js recreation of the Amber Framer template, renamed and adapted for Hot Dang.
 
 Workspace path:
 
@@ -28,20 +28,31 @@ Vercel project:
 lathan-mastellars-projects/hot-dang-amber
 ```
 
-Latest confirmed state:
+Latest confirmed state after the project-page pass:
 
 - Public Vercel URL returns `200`.
 - Vercel CLI auth works as `mageeye`.
 - Vercel production deployment status is `Ready`.
 - GitHub is connected to Vercel.
 - Local git branch is `main`, clean, and pushed to `origin/main`.
+- Latest project-pages commit: `0b8cde2 Build project pages`.
+- Live production deployment was manually verified after deploy.
 
-## What Was Built
+## What Is Built
 
 The homepage was built as a near-replica of:
 
 ```txt
 https://amber.framer.media/
+```
+
+The projects section and three project detail pages were built as near-replicas of:
+
+```txt
+https://amber.framer.media/projects
+https://amber.framer.media/projects/of-earth
+https://amber.framer.media/projects/after-the-quiet
+https://amber.framer.media/projects/echoes-of-us
 ```
 
 The user owns the Amber template and requested use of the original media assets.
@@ -52,14 +63,15 @@ The current implementation includes:
 - Mobile `MENU` / `CLOSE` overlay.
 - Full-screen video hero using original Amber media.
 - Visible brand changed to `HOT DANG`.
-- Visitor-local live clock in the hero metadata.
+- Visitor-local live clock in the homepage hero metadata.
 - Original Framer marketplace/template buttons removed.
 - Original Framer badge removed.
 - Original ticker-line image and logo marquee assets.
-- Sticky, cinematic project video panels using the original Amber project videos.
-- About/services section.
-- Footer CTA: `Start Your Story`.
-- Placeholder pages for future buildout.
+- Sticky, cinematic homepage project video panels.
+- Polished `/projects` grid page.
+- Cinematic project detail template at `/projects/[slug]`.
+- Three mock projects: `Of Earth`, `After the Quiet`, and `Echoes of Us`.
+- About/contact routes still exist as placeholders or homepage sections and need the next template pass.
 
 ## Important Files
 
@@ -72,11 +84,24 @@ src/app/globals.css
 src/app/layout.tsx
 ```
 
-Placeholder routes:
+Reusable site chrome:
 
 ```txt
+src/components/site-chrome.tsx
+```
+
+Project system:
+
+```txt
+src/data/projects.ts
 src/app/projects/page.tsx
 src/app/projects/[slug]/page.tsx
+src/app/globals.css
+```
+
+Remaining placeholder routes:
+
+```txt
 src/app/about/page.tsx
 src/app/contact/page.tsx
 ```
@@ -97,60 +122,21 @@ public/logos/*.svg
 
 ## Current Project Data
 
-The homepage project list currently lives directly in:
+The active project list now lives in:
 
 ```txt
-src/components/home-experience.tsx
+src/data/projects.ts
 ```
+
+The homepage imports that shared project data instead of keeping an inline array.
 
 Current project entries:
 
 - `Of Earth` / `2022` / `Commercial` / `/projects/of-earth`
 - `After the Quiet` / `2023` / `Short Film` / `/projects/after-the-quiet`
 - `Echoes of Us` / `2023` / `Wedding Film` / `/projects/echoes-of-us`
-- `Still Breathing` / `2025` / `Brand Film` / `/projects/still-breathing`
-- `Scent & Silence` / `2022` / `Commercial` / `/projects/scent-silence`
-- `The Light Between` / `2025` / `Short Film` / `/projects/the-light-between`
 
-These are still Amber template placeholders. The next phase is to replace/build these as real Hot Dang projects.
-
-## Next Phase Goal
-
-Build out the project pages.
-
-The immediate next chat should focus on creating a strong project system:
-
-1. Decide or receive the real Hot Dang project names, descriptions, media, categories, and case-study content.
-2. Extract the repeated project data into a shared file, likely something like:
-
-```txt
-src/data/projects.ts
-```
-
-3. Update the homepage to import project data from that shared source instead of keeping the array inside `home-experience.tsx`.
-4. Build `/projects` as a polished index page, not just a placeholder.
-5. Build `/projects/[slug]` as a cinematic project detail template.
-6. Keep the Amber/Hot Dang visual language intact until the Claude Design design-system replacement pass happens.
-
-## Recommended Project Detail Page Direction
-
-The project detail pages should feel like the homepage:
-
-- Black background.
-- White uppercase Antonio display headings.
-- Large full-bleed hero media.
-- Sparse editorial layout.
-- Big project title, year, category, and short logline.
-- Sections for overview, challenge, approach, deliverables, and credits.
-- Full-width video/image moments.
-- Previous/next project navigation.
-- Footer CTA back to contact.
-
-Avoid making generic card-heavy SaaS pages. This should stay cinematic, minimal, and motion-forward.
-
-## Suggested Data Shape
-
-Use a shared typed data model:
+The current `Project` type is intentionally compact:
 
 ```ts
 export type Project = {
@@ -158,18 +144,113 @@ export type Project = {
   slug: string;
   year: string;
   category: string;
-  logline: string;
+  detailCategory: string;
+  client: string;
+  overviewTitle: string;
   overview: string;
-  approach: string;
-  deliverables: string[];
   credits: { label: string; value: string }[];
-  heroMedia: string;
-  previewMedia: string;
-  gallery: { type: "image" | "video"; src: string; alt?: string }[];
+  media: string;
+  mediaType: "video";
+  objectPosition: string;
 };
 ```
 
-For now, it is acceptable to keep using the Amber media as placeholders until the user provides Hot Dang-specific media.
+Important limitation: the current detail template repeats the primary project video in the gallery slots. This matched the available localized Amber assets for the first build, but the next optimization should add a real `gallery` array before adding media-rich Hot Dang case studies.
+
+Recommended future data shape when real image/video sets arrive:
+
+```ts
+type ProjectMedia = {
+  type: "image" | "video";
+  src: string;
+  alt?: string;
+  objectPosition?: string;
+};
+
+export type Project = {
+  title: string;
+  slug: string;
+  year: string;
+  category: string;
+  detailCategory: string;
+  client: string;
+  overviewTitle: string;
+  overview: string;
+  credits: { label: string; value: string }[];
+  heroMedia: ProjectMedia;
+  previewMedia: ProjectMedia;
+  gallery: ProjectMedia[];
+};
+```
+
+## How Project Pages Were Built
+
+`/projects` was modeled from the Amber projects index:
+
+- Black background.
+- Fixed nav over the page.
+- Huge centered uppercase `PROJECTS` title.
+- Inline filter rail: `ALL`, `FILMS/TV`, `COMMERCIAL`, `STILLS`.
+- Three-column desktop grid; one-column mobile grid.
+- Each item has a large cinematic thumbnail/video, Antonio uppercase title, and right-aligned muted category.
+- Footer repeats the existing ticker-line / `Start Your Story` CTA rhythm.
+
+`/projects/[slug]` was modeled from the Amber project detail pages:
+
+- Fixed nav over the page.
+- Large full-width hero video at the top with controls.
+- Four metadata columns directly under the hero: title, category, client, year.
+- Large vertical pause before the overview block.
+- Overview/credits split layout.
+- Big editorial overview heading and muted supporting paragraph.
+- Credits table with muted labels and bright right-aligned values.
+- Stacked gallery moments.
+- `More Projects` section using the same project-card pattern.
+- Shared Hot Dang footer.
+
+Keep this structure intact when adding projects unless the user asks for a new design system pass.
+
+## Reusable Skill For New Projects
+
+A new local skill was created for future agents:
+
+```txt
+C:\Users\Lathan\.codex\skills\hot-dang-project-builder
+```
+
+Use it when the user wants to add a new Hot Dang project from supplied project data and media.
+
+Example invocation:
+
+```txt
+Use $hot-dang-project-builder to add a new project called River House with the video at D:\...\river-house.mp4, category Brand Film, year 2026, client River House, and these credits...
+```
+
+The skill includes:
+
+- Current repo file map.
+- Exact visual/implementation checklist.
+- A helper script to generate or write a project entry from JSON.
+- Validation and deployment guidance.
+
+## Next Phase Goal: About Page
+
+The next template-replication task should build the about section/page from the original Amber template.
+
+Reference to analyze next:
+
+```txt
+https://amber.framer.media/about
+```
+
+Likely implementation targets:
+
+1. Inspect the live Amber about page with desktop and mobile screenshots.
+2. Preserve the existing Hot Dang nav/footer/site chrome.
+3. Replace `src/app/about/page.tsx` placeholder with a real cinematic about page.
+4. Reuse existing home about/services content only where it matches the Amber about route.
+5. Avoid generic SaaS/marketing styling; keep the page sparse, black, editorial, uppercase, and motion-forward.
+6. Add any new reusable data or components only when they reduce duplication with the homepage/about route.
 
 ## Design Constraints To Preserve
 
@@ -179,9 +260,10 @@ Do preserve:
 - Rolling text hover interactions.
 - The mobile overlay menu.
 - Full-bleed cinematic media.
-- Sticky/scroll-driven project feeling.
+- Sticky/scroll-driven project feeling where appropriate.
 - Large Antonio-style type.
 - Sparse black-and-white editorial presentation.
+- The ticker-line / `Start Your Story` footer rhythm.
 
 Do not reintroduce:
 
@@ -205,18 +287,23 @@ For local production verification:
 
 ```powershell
 npm run build
-npm run start -- --port 3001
+npm run start -- --port 3011
 ```
+
+If `3011` is busy, use the next open port.
 
 Then check:
 
 ```txt
-http://localhost:3001/
-http://localhost:3001/projects
-http://localhost:3001/projects/of-earth
+http://localhost:3011/
+http://localhost:3011/projects
+http://localhost:3011/projects/of-earth
+http://localhost:3011/projects/after-the-quiet
+http://localhost:3011/projects/echoes-of-us
+http://localhost:3011/about
 ```
 
-Use Playwright/browser screenshots for desktop and mobile. The homepage is visual-heavy, so browser verification matters.
+Use Playwright/browser screenshots for desktop and mobile. This site is visual-heavy, so screenshot verification matters.
 
 ## Deployment Flow
 
@@ -230,9 +317,9 @@ Normal publish flow:
 
 ```powershell
 git status -sb
-git add .
-git commit -m "Build project pages"
-git push
+git add <explicit changed files>
+git commit -m "Describe the site update"
+git push origin main
 ```
 
 Vercel Git integration is connected, so pushing to `main` should trigger deployment.
@@ -241,6 +328,13 @@ Manual production deploy also works from the project root:
 
 ```powershell
 npx vercel --prod --yes
+```
+
+After deployment, verify the public alias directly:
+
+```powershell
+Invoke-WebRequest -UseBasicParsing -Uri "https://hot-dang-amber.vercel.app/projects"
+Invoke-WebRequest -UseBasicParsing -Uri "https://hot-dang-amber.vercel.app/projects/of-earth"
 ```
 
 If Vercel CLI auth acts weird, prior issue was an empty auth file in:
@@ -269,32 +363,40 @@ mageeye
 
 ## Prior Validation
 
-Already completed successfully:
+Already completed successfully for the current deployed state:
 
 ```powershell
 npm run lint
 npm run build
+git push origin main
+npx vercel --prod --yes
 ```
 
 Public route checks returned `200` for:
 
 ```txt
-https://hot-dang-amber.vercel.app/
 https://hot-dang-amber.vercel.app/projects
 https://hot-dang-amber.vercel.app/projects/of-earth
-https://hot-dang-amber.vercel.app/about
-https://hot-dang-amber.vercel.app/contact
+https://hot-dang-amber.vercel.app/projects/after-the-quiet
+https://hot-dang-amber.vercel.app/projects/echoes-of-us
+```
+
+Content checks confirmed live pages contain:
+
+```txt
+Of Earth
+Terrae Botanicals
+Independent
+Private Couple
 ```
 
 ## What To Ask User Next
 
-Before building real project pages, ask for whichever of these they have:
+For the about-page pass, ask for or infer:
 
-- Real Hot Dang project names.
-- Project descriptions or case-study notes.
-- Project videos/images.
-- Desired categories.
-- Whether to keep the Amber placeholder project names temporarily.
-- Whether each project detail page should be image-led, video-led, or mixed.
+- Whether to duplicate the Amber about page exactly first, then content-swap later.
+- Any Hot Dang bio/company story text already available.
+- Any preferred about-page media.
+- Whether the services list should stay as-is or become Hot Dang-specific.
 
-If they do not have real content yet, proceed with a robust project-page template using the current placeholder media/data so Claude Design can later reskin and content-swap cleanly.
+If the user does not have final Hot Dang about content yet, proceed with a strong Amber-template replica and clearly isolate editable copy/media.
