@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { projects } from "@/data/projects";
+import { ProjectMediaFrame } from "@/components/project-media";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 
 const filters = ["All", "Films/TV", "Commercial", "Stills"];
@@ -28,16 +29,10 @@ export default function ProjectsPage() {
             key={project.slug}
           >
             <div className="project-card-media">
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                style={{ objectPosition: project.objectPosition }}
-              >
-                <source src={project.media} type="video/mp4" />
-              </video>
+              <ProjectMediaFrame
+                media={project.previewMedia}
+                sizes="(max-width: 760px) 100vw, (max-width: 900px) 50vw, 33vw"
+              />
             </div>
             <div className="project-card-meta">
               <h2>{project.title}</h2>

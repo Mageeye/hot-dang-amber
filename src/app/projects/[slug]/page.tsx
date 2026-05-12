@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getMoreProjects, getProject, projects } from "@/data/projects";
+import { ProjectMediaFrame } from "@/components/project-media";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import Link from "next/link";
 
@@ -45,14 +46,11 @@ export default async function ProjectPage({
       <SiteHeader />
 
       <section className="project-hero-detail" aria-label={project.title}>
-        <video
-          controls
-          playsInline
-          preload="metadata"
-          style={{ objectPosition: project.objectPosition }}
-        >
-          <source src={project.media} type="video/mp4" />
-        </video>
+        <ProjectMediaFrame
+          media={project.heroMedia}
+          controls={project.heroMedia.type === "video"}
+          priority
+        />
       </section>
 
       <section className="project-detail-meta" aria-label="Project metadata">
@@ -94,24 +92,21 @@ export default async function ProjectPage({
       </section>
 
       <section className="project-gallery" aria-label={`${project.title} media`}>
-        <div className="gallery-wide">
-          <video autoPlay muted loop playsInline preload="metadata">
-            <source src={project.media} type="video/mp4" />
-          </video>
-        </div>
-        <div className="gallery-wide gallery-offset">
-          <video autoPlay muted loop playsInline preload="metadata">
-            <source src={project.media} type="video/mp4" />
-          </video>
-        </div>
-        <div className="gallery-split">
-          <video autoPlay muted loop playsInline preload="metadata">
-            <source src={project.media} type="video/mp4" />
-          </video>
-          <video autoPlay muted loop playsInline preload="metadata">
-            <source src={project.media} type="video/mp4" />
-          </video>
-        </div>
+        {project.gallery.slice(0, 2).map((media, index) => (
+          <div
+            className={`gallery-wide ${index === 1 ? "gallery-offset" : ""}`}
+            key={media.src}
+          >
+            <ProjectMediaFrame media={media} />
+          </div>
+        ))}
+        {project.gallery.length > 2 ? (
+          <div className="gallery-split">
+            {project.gallery.slice(2).map((media) => (
+              <ProjectMediaFrame media={media} key={media.src} />
+            ))}
+          </div>
+        ) : null}
       </section>
 
       <section className="more-projects">
@@ -124,16 +119,10 @@ export default async function ProjectPage({
               key={related.slug}
             >
               <div className="project-card-media">
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  style={{ objectPosition: related.objectPosition }}
-                >
-                  <source src={related.media} type="video/mp4" />
-                </video>
+                <ProjectMediaFrame
+                  media={related.previewMedia}
+                  sizes="(max-width: 760px) 100vw, (max-width: 900px) 50vw, 33vw"
+                />
               </div>
               <div className="project-card-meta">
                 <h3>{related.title}</h3>

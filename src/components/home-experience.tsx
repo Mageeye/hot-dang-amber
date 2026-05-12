@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { projects, type Project } from "@/data/projects";
+import { ProjectMediaFrame } from "@/components/project-media";
 
 const servicesLeft = [
   "Brand Films",
@@ -107,16 +108,7 @@ function ProjectPanel({ project, index }: { project: Project; index: number }) {
   return (
     <section className="project-step" style={{ zIndex: index + 1 }}>
       <Link className="project-frame" href={`/projects/${project.slug}`}>
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          style={{ objectPosition: project.objectPosition }}
-        >
-          <source src={project.media} type="video/mp4" />
-        </video>
+        <ProjectMediaFrame media={project.previewMedia} priority={index === 0} />
         <div className="project-vignette" />
         <div className="project-copy">
           <h2>{project.title}</h2>

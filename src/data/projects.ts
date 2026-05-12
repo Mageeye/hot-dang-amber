@@ -3,6 +3,14 @@ export type ProjectCredit = {
   value: string;
 };
 
+export type ProjectMedia = {
+  type: "image" | "video";
+  src: string;
+  alt?: string;
+  objectPosition?: string;
+  mobileObjectPosition?: string;
+};
+
 export type Project = {
   title: string;
   slug: string;
@@ -13,10 +21,71 @@ export type Project = {
   overviewTitle: string;
   overview: string;
   credits: ProjectCredit[];
-  media: string;
-  mediaType: "video";
-  objectPosition: string;
+  heroMedia: ProjectMedia;
+  previewMedia: ProjectMedia;
+  gallery: ProjectMedia[];
 };
+
+const videoMedia = (src: string, objectPosition: string): ProjectMedia => ({
+  type: "video",
+  src,
+  objectPosition,
+});
+
+const crocsJuicyBase = "/media/crocs-x-juicy/";
+
+const crocsJuicyGallery: ProjectMedia[] = [
+  {
+    type: "image",
+    src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Alana_2203_Extended.jpg`,
+    alt: "Crocs X Juicy campaign image with Alana",
+    objectPosition: "50% 46%",
+    mobileObjectPosition: "78% 48%",
+  },
+  {
+    type: "image",
+    src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Duo_1590.jpg`,
+    alt: "Crocs X Juicy duo campaign still",
+    objectPosition: "50% 42%",
+    mobileObjectPosition: "50% 42%",
+  },
+  {
+    type: "image",
+    src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Alana_2149.jpg`,
+    alt: "Crocs X Juicy portrait campaign still",
+    objectPosition: "50% 28%",
+  },
+  {
+    type: "image",
+    src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Alicia_0893.jpg`,
+    alt: "Crocs X Juicy Alicia campaign portrait",
+    objectPosition: "50% 34%",
+  },
+  {
+    type: "image",
+    src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Product_2593.jpg`,
+    alt: "Crocs X Juicy product campaign still",
+    objectPosition: "50% 52%",
+  },
+  {
+    type: "image",
+    src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Duo_1822.jpg`,
+    alt: "Crocs X Juicy duo lifestyle campaign still",
+    objectPosition: "50% 42%",
+  },
+  {
+    type: "image",
+    src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Alicia_0548.jpg`,
+    alt: "Crocs X Juicy Alicia campaign still",
+    objectPosition: "50% 31%",
+  },
+  {
+    type: "image",
+    src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Product_2999.jpg`,
+    alt: "Crocs X Juicy product detail still",
+    objectPosition: "50% 50%",
+  },
+];
 
 export const projects: Project[] = [
   {
@@ -38,9 +107,14 @@ export const projects: Project[] = [
       { label: "Colorist", value: "Ren Calder" },
       { label: "Producer", value: "Amber Films Collective" },
     ],
-    media: "/media/of-earth.mp4",
-    mediaType: "video",
-    objectPosition: "50% 48%",
+    heroMedia: videoMedia("/media/of-earth.mp4", "50% 48%"),
+    previewMedia: videoMedia("/media/of-earth.mp4", "50% 48%"),
+    gallery: [
+      videoMedia("/media/of-earth.mp4", "50% 48%"),
+      videoMedia("/media/of-earth.mp4", "50% 48%"),
+      videoMedia("/media/of-earth.mp4", "50% 48%"),
+      videoMedia("/media/of-earth.mp4", "50% 48%"),
+    ],
   },
   {
     title: "After the Quiet",
@@ -61,9 +135,14 @@ export const projects: Project[] = [
       { label: "Movement Director", value: "Ayla Rhodes" },
       { label: "Colorist", value: "Ember Faye" },
     ],
-    media: "/media/after-the-quiet.mp4",
-    mediaType: "video",
-    objectPosition: "50% 50%",
+    heroMedia: videoMedia("/media/after-the-quiet.mp4", "50% 50%"),
+    previewMedia: videoMedia("/media/after-the-quiet.mp4", "50% 50%"),
+    gallery: [
+      videoMedia("/media/after-the-quiet.mp4", "50% 50%"),
+      videoMedia("/media/after-the-quiet.mp4", "50% 50%"),
+      videoMedia("/media/after-the-quiet.mp4", "50% 50%"),
+      videoMedia("/media/after-the-quiet.mp4", "50% 50%"),
+    ],
   },
   {
     title: "Echoes of Us",
@@ -83,9 +162,46 @@ export const projects: Project[] = [
       { label: "Soundtrack Curation", value: "Lark Sync" },
       { label: "Photographer", value: "Sienna Bloom" },
     ],
-    media: "/media/echoes-of-us.mp4",
-    mediaType: "video",
-    objectPosition: "50% 45%",
+    heroMedia: videoMedia("/media/echoes-of-us.mp4", "50% 45%"),
+    previewMedia: videoMedia("/media/echoes-of-us.mp4", "50% 45%"),
+    gallery: [
+      videoMedia("/media/echoes-of-us.mp4", "50% 45%"),
+      videoMedia("/media/echoes-of-us.mp4", "50% 45%"),
+      videoMedia("/media/echoes-of-us.mp4", "50% 45%"),
+      videoMedia("/media/echoes-of-us.mp4", "50% 45%"),
+    ],
+  },
+  {
+    title: "Crocs X Juicy",
+    slug: "crocs-x-juicy",
+    year: "2025",
+    category: "Stills",
+    detailCategory: "Commercial",
+    client: "Crocs X Juicy",
+    overviewTitle:
+      "A candy-colored stills campaign built around texture, attitude, and shine.",
+    overview:
+      "Shot with a glossy editorial sensibility, this campaign frames talent, product, and styling as one saturated world. The images move between crisp product detail and playful portraiture, giving the collaboration a bright, collectible visual language.",
+    credits: [
+      { label: "Creative Production", value: "Hot Dang" },
+      { label: "Photography", value: "Hot Dang" },
+      { label: "Post-Production", value: "Hot Dang" },
+      { label: "Client", value: "Crocs X Juicy" },
+    ],
+    heroMedia: {
+      type: "image",
+      src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Alana_2203_Extended.jpg`,
+      alt: "Crocs X Juicy hero campaign still",
+      objectPosition: "50% 46%",
+      mobileObjectPosition: "78% 48%",
+    },
+    previewMedia: {
+      type: "image",
+      src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Duo_1590.jpg`,
+      alt: "Crocs X Juicy project preview",
+      objectPosition: "50% 42%",
+    },
+    gallery: crocsJuicyGallery,
   },
 ];
 

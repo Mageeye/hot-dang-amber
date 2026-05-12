@@ -352,17 +352,31 @@ img {
   place-items: center;
 }
 
-.project-frame video {
-  position: absolute;
-  inset: 0;
+.media-frame {
+  position: relative;
+  display: block;
   width: 100%;
   height: 100%;
-  transform: scale(1.06);
+  overflow: clip;
+  background: #111;
+}
+
+.media-frame video,
+.media-frame img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  object-position: var(--media-position, 50% 50%);
+}
+
+.project-frame .media-frame {
+  position: absolute;
+  inset: 0;
+  transform: scale(1.06);
   transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.project-frame:hover video {
+.project-frame:hover .media-frame {
   transform: scale(1.1);
 }
 
@@ -1048,16 +1062,13 @@ img {
   background: #111;
 }
 
-.project-card-media video {
-  width: 100%;
-  height: 100%;
+.project-card-media .media-frame {
   transform: scale(1.02);
-  object-fit: cover;
   transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.project-card:hover .project-card-media video,
-.project-card:focus-visible .project-card-media video {
+.project-card:hover .project-card-media .media-frame,
+.project-card:focus-visible .project-card-media .media-frame {
   transform: scale(1.07);
 }
 
@@ -1097,11 +1108,10 @@ img {
   padding: 35px 24px 0;
 }
 
-.project-hero-detail video {
+.project-hero-detail .media-frame {
   width: 100%;
   height: calc(100svh - 74px);
   min-height: 560px;
-  object-fit: cover;
   background: #111;
 }
 
@@ -1216,7 +1226,7 @@ img {
 }
 
 .gallery-wide,
-.gallery-split video {
+.gallery-split .media-frame {
   overflow: clip;
   background: #111;
 }
@@ -1235,13 +1245,12 @@ img {
   gap: 8px;
 }
 
-.project-gallery video {
+.project-gallery .media-frame {
   width: 100%;
   height: 100%;
-  object-fit: cover;
 }
 
-.gallery-split video {
+.gallery-split .media-frame {
   aspect-ratio: 1.7 / 1;
 }
 
@@ -1285,6 +1294,11 @@ img {
 }
 
 @media (max-width: 760px) {
+  .media-frame video,
+  .media-frame img {
+    object-position: var(--media-position-mobile, var(--media-position, 50% 50%));
+  }
+
   .about-hero-copy {
     min-height: 365px;
     padding: 94px 16px 24px;
@@ -1415,7 +1429,7 @@ img {
     padding: 56px 16px 0;
   }
 
-  .project-hero-detail video {
+  .project-hero-detail .media-frame {
     height: 62svh;
     min-height: 360px;
   }
