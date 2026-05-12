@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getMoreProjects, getProject, projects } from "@/data/projects";
+import { ProjectMasonryGallery } from "@/components/project-masonry-gallery";
 import { ProjectMediaFrame } from "@/components/project-media";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import Link from "next/link";
@@ -91,23 +92,7 @@ export default async function ProjectPage({
         </div>
       </section>
 
-      <section className="project-gallery" aria-label={`${project.title} media`}>
-        {project.gallery.slice(0, 2).map((media, index) => (
-          <div
-            className={`gallery-wide ${index === 1 ? "gallery-offset" : ""}`}
-            key={media.src}
-          >
-            <ProjectMediaFrame media={media} />
-          </div>
-        ))}
-        {project.gallery.length > 2 ? (
-          <div className="gallery-split">
-            {project.gallery.slice(2).map((media) => (
-              <ProjectMediaFrame media={media} key={media.src} />
-            ))}
-          </div>
-        ) : null}
-      </section>
+      <ProjectMasonryGallery media={project.gallery} title={project.title} />
 
       <section className="more-projects">
         <h2>More Projects</h2>

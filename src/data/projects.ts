@@ -9,6 +9,8 @@ export type ProjectMedia = {
   alt?: string;
   objectPosition?: string;
   mobileObjectPosition?: string;
+  width?: number;
+  height?: number;
 };
 
 export type Project = {
@@ -34,57 +36,157 @@ const videoMedia = (src: string, objectPosition: string): ProjectMedia => ({
 
 const crocsJuicyBase = "/media/crocs-x-juicy/";
 
+const crocsJuicyImage = (
+  fileName: string,
+  width: number,
+  height: number,
+  alt: string,
+  objectPosition = "50% 50%",
+  mobileObjectPosition?: string,
+): ProjectMedia => ({
+  type: "image",
+  src: `${crocsJuicyBase}${fileName}`,
+  alt,
+  width,
+  height,
+  objectPosition,
+  mobileObjectPosition,
+});
+
 const crocsJuicyGallery: ProjectMedia[] = [
-  {
-    type: "image",
-    src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Alana_2203_Extended.jpg`,
-    alt: "Crocs X Juicy campaign image with Alana",
-    objectPosition: "50% 46%",
-    mobileObjectPosition: "78% 48%",
-  },
-  {
-    type: "image",
-    src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Duo_1590.jpg`,
-    alt: "Crocs X Juicy duo campaign still",
-    objectPosition: "50% 42%",
-    mobileObjectPosition: "50% 42%",
-  },
-  {
-    type: "image",
-    src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Alana_2149.jpg`,
-    alt: "Crocs X Juicy portrait campaign still",
-    objectPosition: "50% 28%",
-  },
-  {
-    type: "image",
-    src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Alicia_0893.jpg`,
-    alt: "Crocs X Juicy Alicia campaign portrait",
-    objectPosition: "50% 34%",
-  },
-  {
-    type: "image",
-    src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Product_2593.jpg`,
-    alt: "Crocs X Juicy product campaign still",
-    objectPosition: "50% 52%",
-  },
-  {
-    type: "image",
-    src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Duo_1822.jpg`,
-    alt: "Crocs X Juicy duo lifestyle campaign still",
-    objectPosition: "50% 42%",
-  },
-  {
-    type: "image",
-    src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Alicia_0548.jpg`,
-    alt: "Crocs X Juicy Alicia campaign still",
-    objectPosition: "50% 31%",
-  },
-  {
-    type: "image",
-    src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Product_2999.jpg`,
-    alt: "Crocs X Juicy product detail still",
-    objectPosition: "50% 50%",
-  },
+  crocsJuicyImage(
+    "2025_01_22_CrocsxJuicy_Alana_2203_Extended.jpg",
+    3000,
+    1388,
+    "Crocs X Juicy campaign image with Alana",
+    "50% 46%",
+    "78% 48%",
+  ),
+  crocsJuicyImage(
+    "2025_01_22_CrocsxJuicy_Duo_1590.jpg",
+    3000,
+    2000,
+    "Crocs X Juicy duo campaign still",
+    "50% 42%",
+  ),
+  crocsJuicyImage(
+    "2025_01_22_CrocsxJuicy_Product_2593.jpg",
+    2000,
+    3000,
+    "Crocs X Juicy product campaign still",
+    "50% 52%",
+  ),
+  crocsJuicyImage(
+    "2025_01_22_CrocsxJuicy_Alana_1973.jpg",
+    2000,
+    3000,
+    "Crocs X Juicy Alana portrait campaign still",
+    "50% 34%",
+  ),
+  crocsJuicyImage(
+    "2025_01_22_CrocsxJuicy_Alicia_0893.jpg",
+    2000,
+    3000,
+    "Crocs X Juicy Alicia campaign portrait",
+    "50% 34%",
+  ),
+  crocsJuicyImage(
+    "2025_01_22_CrocsxJuicy_Duo_1638.jpg",
+    3000,
+    2000,
+    "Crocs X Juicy duo campaign image",
+    "50% 44%",
+  ),
+  crocsJuicyImage(
+    "2025_01_22_CrocsxJuicy_Alicia_0288.jpg",
+    2000,
+    3000,
+    "Crocs X Juicy Alicia portrait still",
+    "50% 35%",
+  ),
+  crocsJuicyImage(
+    "2025_01_22_CrocsxJuicy_Product_2999.jpg",
+    3000,
+    2000,
+    "Crocs X Juicy product detail still",
+  ),
+  crocsJuicyImage(
+    "2025_01_22_CrocsxJuicy_Alana_2149.jpg",
+    2000,
+    3000,
+    "Crocs X Juicy portrait campaign still",
+    "50% 28%",
+  ),
+  crocsJuicyImage(
+    "2025_01_22_CrocsxJuicy_Alicia_0392.jpg",
+    2001,
+    3000,
+    "Crocs X Juicy Alicia editorial still",
+    "50% 34%",
+  ),
+  crocsJuicyImage(
+    "2025_01_22_CrocsxJuicy_Duo_1822.jpg",
+    3000,
+    2001,
+    "Crocs X Juicy duo lifestyle campaign still",
+    "50% 42%",
+  ),
+  crocsJuicyImage(
+    "2025_01_22_CrocsxJuicy_Product_2617.jpg",
+    2000,
+    3000,
+    "Crocs X Juicy product portrait still",
+    "50% 52%",
+  ),
+  crocsJuicyImage(
+    "2025_01_22_CrocsxJuicy_Alana_2203.jpg",
+    3000,
+    2000,
+    "Crocs X Juicy Alana landscape still",
+    "50% 45%",
+  ),
+  crocsJuicyImage(
+    "2025_01_22_CrocsxJuicy_Alicia_0548.jpg",
+    2000,
+    3000,
+    "Crocs X Juicy Alicia campaign still",
+    "50% 31%",
+  ),
+  crocsJuicyImage(
+    "2025_01_22_CrocsxJuicy_Duo_1100.jpg",
+    2000,
+    3000,
+    "Crocs X Juicy duo portrait still",
+    "50% 34%",
+  ),
+  crocsJuicyImage(
+    "2025_01_22_CrocsxJuicy_Product_2624.jpg",
+    2000,
+    3000,
+    "Crocs X Juicy product detail portrait",
+    "50% 52%",
+  ),
+  crocsJuicyImage(
+    "2025_01_22_CrocsxJuicy_Alana_2293.jpg",
+    2000,
+    3000,
+    "Crocs X Juicy Alana campaign portrait",
+    "50% 35%",
+  ),
+  crocsJuicyImage(
+    "2025_01_22_CrocsxJuicy_Alicia_0685.jpg",
+    2000,
+    3000,
+    "Crocs X Juicy Alicia pink campaign still",
+    "50% 32%",
+  ),
+  crocsJuicyImage(
+    "2025_01_22_CrocsxJuicy_Alana_2383.jpg",
+    2000,
+    3000,
+    "Crocs X Juicy Alana product portrait",
+    "50% 34%",
+  ),
 ];
 
 export const projects: Project[] = [
@@ -194,12 +296,16 @@ export const projects: Project[] = [
       alt: "Crocs X Juicy hero campaign still",
       objectPosition: "50% 46%",
       mobileObjectPosition: "78% 48%",
+      width: 3000,
+      height: 1388,
     },
     previewMedia: {
       type: "image",
       src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Duo_1590.jpg`,
       alt: "Crocs X Juicy project preview",
       objectPosition: "50% 42%",
+      width: 3000,
+      height: 2000,
     },
     gallery: crocsJuicyGallery,
   },
