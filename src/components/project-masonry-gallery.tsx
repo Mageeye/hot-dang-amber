@@ -33,8 +33,10 @@ function LightboxMedia({ media }: { media: ProjectMedia }) {
       alt={media.alt ?? ""}
       width={media.width ?? 1600}
       height={media.height ?? 1000}
+      quality={100}
       sizes="100vw"
       priority
+      unoptimized
     />
   );
 }
@@ -142,7 +144,7 @@ export function ProjectMasonryGallery({
             onClick={close}
             type="button"
           >
-            ×
+            X
           </button>
 
           {canNavigate ? (
@@ -153,7 +155,7 @@ export function ProjectMasonryGallery({
                 onClick={showPrevious}
                 type="button"
               >
-                ‹
+                &lt;
               </button>
               <button
                 aria-label="Next image"
@@ -161,7 +163,7 @@ export function ProjectMasonryGallery({
                 onClick={showNext}
                 type="button"
               >
-                ›
+                &gt;
               </button>
             </>
           ) : null}

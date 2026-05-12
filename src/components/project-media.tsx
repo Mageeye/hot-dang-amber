@@ -47,7 +47,9 @@ export function ProjectMediaFrame({
           alt={media.alt ?? ""}
           fill
           priority={priority}
+          quality={100}
           sizes={sizes}
+          unoptimized
         />
       )}
     </div>

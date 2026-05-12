@@ -292,12 +292,12 @@ export const projects: Project[] = [
     ],
     heroMedia: {
       type: "image",
-      src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Alana_2203_Extended.jpg`,
+      src: `${crocsJuicyBase}2025_01_22_CrocsxJuicy_Alana_2203.jpg`,
       alt: "Crocs X Juicy hero campaign still",
-      objectPosition: "50% 46%",
+      objectPosition: "50% 47%",
       mobileObjectPosition: "78% 48%",
       width: 3000,
-      height: 1388,
+      height: 2000,
     },
     previewMedia: {
       type: "image",
