@@ -3,66 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
-
-type Project = {
-  title: string;
-  year: string;
-  category: string;
-  slug: string;
-  media: string;
-  position: string;
-};
-
-const projects: Project[] = [
-  {
-    title: "Of Earth",
-    year: "2022",
-    category: "Commercial",
-    slug: "of-earth",
-    media: "/media/of-earth.mp4",
-    position: "50% 48%",
-  },
-  {
-    title: "After the Quiet",
-    year: "2023",
-    category: "Short Film",
-    slug: "after-the-quiet",
-    media: "/media/after-the-quiet.mp4",
-    position: "50% 50%",
-  },
-  {
-    title: "Echoes of Us",
-    year: "2023",
-    category: "Wedding Film",
-    slug: "echoes-of-us",
-    media: "/media/echoes-of-us.mp4",
-    position: "50% 45%",
-  },
-  {
-    title: "Still Breathing",
-    year: "2025",
-    category: "Brand Film",
-    slug: "still-breathing",
-    media: "/media/still-breathing.mp4",
-    position: "50% 50%",
-  },
-  {
-    title: "Scent & Silence",
-    year: "2022",
-    category: "Commercial",
-    slug: "scent-silence",
-    media: "/media/scent-silence.mp4",
-    position: "50% 52%",
-  },
-  {
-    title: "The Light Between",
-    year: "2025",
-    category: "Short Film",
-    slug: "the-light-between",
-    media: "/media/the-light-between.mp4",
-    position: "50% 50%",
-  },
-];
+import { projects, type Project } from "@/data/projects";
 
 const servicesLeft = [
   "Brand Films",
@@ -172,7 +113,7 @@ function ProjectPanel({ project, index }: { project: Project; index: number }) {
           loop
           playsInline
           preload="metadata"
-          style={{ objectPosition: project.position }}
+          style={{ objectPosition: project.objectPosition }}
         >
           <source src={project.media} type="video/mp4" />
         </video>
@@ -272,7 +213,7 @@ export function HomeExperience() {
             <RollingLink href="https://instagram.com">Instagram</RollingLink>
             <RollingLink href="https://vimeo.com">Vimeo</RollingLink>
           </div>
-          <p>© Hot Dang 2025</p>
+          <p>&copy; Hot Dang 2025</p>
         </div>
       </div>
 
@@ -288,7 +229,7 @@ export function HomeExperience() {
           <span>Creative Production Studio</span>
           <span>Los Angeles, California</span>
           <Clock />
-          <span>© Hot Dang 2025</span>
+          <span>&copy; Hot Dang 2025</span>
         </div>
       </section>
 
@@ -345,7 +286,7 @@ export function HomeExperience() {
             <RollingLink href="https://instagram.com">Instagram</RollingLink>
             <RollingLink href="https://vimeo.com">Vimeo</RollingLink>
           </div>
-          <p>© 2025 All rights reserved</p>
+          <p>&copy; 2025 All rights reserved</p>
         </div>
       </footer>
     </main>
