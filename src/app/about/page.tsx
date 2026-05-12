@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { AboutParallaxImage } from "@/components/about-parallax-image";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 
 export const metadata: Metadata = {
@@ -160,15 +161,7 @@ export default function AboutPage() {
         </h1>
       </section>
 
-      <section className="about-hero-image" aria-label="Studio scene">
-        <Image
-          src="/media/about/studio-hands.jpg"
-          alt=""
-          width={1920}
-          height={1280}
-          priority
-        />
-      </section>
+      <AboutParallaxImage />
 
       <section className="about-story-block">
         <div className="about-story-copy">

@@ -754,6 +754,13 @@ img {
   object-fit: cover;
 }
 
+.about-hero-image img {
+  transform: scale(1.12)
+    translateY(calc((var(--about-hero-progress, 0.5) - 0.5) * 86px));
+  transform-origin: center;
+  will-change: transform;
+}
+
 .about-story-block {
   display: grid;
   grid-template-columns: minmax(0, 0.94fr) minmax(360px, 0.9fr);
