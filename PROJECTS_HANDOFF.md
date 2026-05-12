@@ -1,4 +1,4 @@
-# Hot Dang Site Handoff: Next Phase Is About
+# Hot Dang Site Handoff: Next Phase Is Contact
 
 ## Current State
 
@@ -28,14 +28,14 @@ Vercel project:
 lathan-mastellars-projects/hot-dang-amber
 ```
 
-Latest confirmed state after the project-page pass:
+Latest confirmed state after the about-page pass:
 
 - Public Vercel URL returns `200`.
 - Vercel CLI auth works as `mageeye`.
 - Vercel production deployment status is `Ready`.
 - GitHub is connected to Vercel.
 - Local git branch is `main`, clean, and pushed to `origin/main`.
-- Latest project-pages commit: `0b8cde2 Build project pages`.
+- Latest about-page commit: `7bcdcc9 Add about hero parallax`.
 - Live production deployment was manually verified after deploy.
 
 ## What Is Built
@@ -55,6 +55,12 @@ https://amber.framer.media/projects/after-the-quiet
 https://amber.framer.media/projects/echoes-of-us
 ```
 
+The about page was built as a near-replica of:
+
+```txt
+https://amber.framer.media/about
+```
+
 The user owns the Amber template and requested use of the original media assets.
 
 The current implementation includes:
@@ -71,7 +77,8 @@ The current implementation includes:
 - Polished `/projects` grid page.
 - Cinematic project detail template at `/projects/[slug]`.
 - Three mock projects: `Of Earth`, `After the Quiet`, and `Echoes of Us`.
-- About/contact routes still exist as placeholders or homepage sections and need the next template pass.
+- Full `/about` page using Amber template copy, stats, awards, clients, team layout, localized Amber assets, and scroll parallax on the hero image.
+- `/contact` still exists as a placeholder and needs the next template pass.
 
 ## Important Files
 
@@ -99,10 +106,18 @@ src/app/projects/[slug]/page.tsx
 src/app/globals.css
 ```
 
-Remaining placeholder routes:
+About page:
 
 ```txt
 src/app/about/page.tsx
+src/components/about-parallax-image.tsx
+public/media/about/*
+src/app/globals.css
+```
+
+Remaining placeholder routes:
+
+```txt
 src/app/contact/page.tsx
 ```
 
@@ -118,6 +133,7 @@ public/media/scent-silence.mp4
 public/media/the-light-between.mp4
 public/media/tick-line.png
 public/logos/*.svg
+public/media/about/*
 ```
 
 ## Current Project Data
@@ -233,24 +249,42 @@ The skill includes:
 - A helper script to generate or write a project entry from JSON.
 - Validation and deployment guidance.
 
-## Next Phase Goal: About Page
+## Completed Phase: About Page
 
-The next template-replication task should build the about section/page from the original Amber template.
+The about page now follows the original Amber template closely.
 
-Reference to analyze next:
+Reference used:
 
 ```txt
 https://amber.framer.media/about
 ```
 
+Implemented:
+
+1. Preserved Hot Dang nav/footer/site chrome.
+2. Replaced `src/app/about/page.tsx` placeholder with Amber-style about content.
+3. Localized Amber about media in `public/media/about/`.
+4. Added `src/components/about-parallax-image.tsx` for the hero image scroll parallax.
+5. Kept Amber template content, awards, clients, team names, and stats for later content swap.
+6. Verified desktop/mobile screenshots, local build, production deploy, and public `/about` route.
+
+## Next Phase Goal: Contact Page
+
+The next template-replication task should build the contact page from the original Amber template.
+
+Reference to analyze next:
+
+```txt
+https://amber.framer.media/contact
+```
+
 Likely implementation targets:
 
-1. Inspect the live Amber about page with desktop and mobile screenshots.
-2. Preserve the existing Hot Dang nav/footer/site chrome.
-3. Replace `src/app/about/page.tsx` placeholder with a real cinematic about page.
-4. Reuse existing home about/services content only where it matches the Amber about route.
-5. Avoid generic SaaS/marketing styling; keep the page sparse, black, editorial, uppercase, and motion-forward.
-6. Add any new reusable data or components only when they reduce duplication with the homepage/about route.
+1. Inspect the live Amber contact page with desktop and mobile screenshots.
+2. Preserve existing Hot Dang nav/footer/site chrome.
+3. Replace `src/app/contact/page.tsx` placeholder with the template contact layout.
+4. Keep template copy/contact fields first unless the user provides final Hot Dang contact details.
+5. Avoid adding auth, databases, generic forms, or SaaS styling unless requested.
 
 ## Design Constraints To Preserve
 
@@ -375,6 +409,8 @@ npx vercel --prod --yes
 Public route checks returned `200` for:
 
 ```txt
+https://hot-dang-amber.vercel.app/
+https://hot-dang-amber.vercel.app/about
 https://hot-dang-amber.vercel.app/projects
 https://hot-dang-amber.vercel.app/projects/of-earth
 https://hot-dang-amber.vercel.app/projects/after-the-quiet
@@ -384,6 +420,8 @@ https://hot-dang-amber.vercel.app/projects/echoes-of-us
 Content checks confirmed live pages contain:
 
 ```txt
+Amber Films is a creative studio
+Clara Wynn
 Of Earth
 Terrae Botanicals
 Independent
@@ -392,11 +430,11 @@ Private Couple
 
 ## What To Ask User Next
 
-For the about-page pass, ask for or infer:
+For the contact-page pass, ask for or infer:
 
-- Whether to duplicate the Amber about page exactly first, then content-swap later.
-- Any Hot Dang bio/company story text already available.
-- Any preferred about-page media.
-- Whether the services list should stay as-is or become Hot Dang-specific.
+- Whether to duplicate the Amber contact page exactly first, then content-swap later.
+- Final Hot Dang email, phone, location, and social links.
+- Whether any contact form should be functional now or just visually matched.
+- Whether to keep template contact copy until real Hot Dang copy is ready.
 
-If the user does not have final Hot Dang about content yet, proceed with a strong Amber-template replica and clearly isolate editable copy/media.
+If the user does not have final Hot Dang contact content yet, proceed with a strong Amber-template replica and clearly isolate editable copy/contact details.
